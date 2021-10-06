@@ -6,7 +6,7 @@ function City(props) {
   return (
     <div>
       {
-        //JSON.stringify(props.data)
+        JSON.stringify(props.data)
       }
     </div>
   );
@@ -21,10 +21,6 @@ function ZipSearchField(props) {
   );
 }
 
-function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-
 
 class App extends Component {
   state = {
@@ -36,13 +32,12 @@ class App extends Component {
     //console.log(event.target.value);
     this.setState({zipCode : event.target.value})
     //setSate is an async call.
-    if(this.validZip(event.target.value)){
+    const currZip = event.target.value;
+    if(this.validZip(currZip)){
       fetch(`http://ctp-zip-api.herokuapp.com/zip/${event.target.value}`)
       .then((res) => res.json())
-      .then((data) => this.state.cities.indexOf(data) === -1 ?  this.state.cities.push(data) : console.log("Already present"));
+      .then((data) => this.state.cities.indexOf(data) === -1 && this.setState({cities : data}));
     }
-    var unique = this.state.cities.filter(onlyUnique);
-    console.log(unique)
   }
   
 
