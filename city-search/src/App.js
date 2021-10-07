@@ -29,7 +29,7 @@ class App extends Component {
   }
   
   cityChanged = (event) => {
-    this.setState({zipCode : event.target.value});
+    this.setState({zipCode : event.target.value})
     fetch(`http://ctp-zip-api.herokuapp.com/city/${event.target.value.toUpperCase()}`)
     .then((res) => res.json())
     .then((data) => this.setState({zipCodes : data}));
@@ -42,7 +42,10 @@ class App extends Component {
           <h2>City Name Search</h2>
         </div>
         <CitySearchField zipCode = {this.state.cityName} changeHandler = {this.cityChanged}/>
-        
+        <div>
+          Current Zip is {this.state.cityName}
+        </div>
+
         <div>
           {this.state.zipCodes.map((city) => <ZipCode data={city}/>)}
         </div>
